@@ -12,7 +12,6 @@ export const userController = {
       const result = userService.createUser(req.body);
       res.status(201).json(result);
     } catch (e) {
-      console.log(111, e);
       next(e);
     }
   },

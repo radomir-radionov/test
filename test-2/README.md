@@ -8,12 +8,17 @@ Working server with full user CRUD.
 src/
 ├── controllers/
 │   └── user.controller.js
+├── middleware/
+│   ├── requestLogger.js
+│   ├── notFound.js
+│   └── errorHandler.js
 ├── services/
 │   └── user.service.js
 ├── repositories/
 │   └── user.repository.js
 ├── routes/
-│   └── user.routes.js
+│   ├── health.routes.js   ← /, /health, POST /data
+│   └── user.routes.js     ← mounted at /users
 ├── utils/
 │   ├── hash.js
 │   └── dto.js          ← toUserDto (no password in response)
@@ -31,19 +36,19 @@ npm start
 
 ## API
 
-| Method | Path       | Description        |
-|--------|------------|--------------------|
-| GET    | /user     | List all users     |
-| GET    | /user/:id | Get one user       |
-| POST   | /user     | Create user        |
-| PUT    | /user/:id | Update user        |
-| DELETE | /user/:id | Delete user        |
+| Method | Path         | Description        |
+|--------|--------------|--------------------|
+| GET    | /users       | List all users     |
+| GET    | /users/:id   | Get one user       |
+| POST   | /users       | Create user        |
+| PUT    | /users/:id   | Update user        |
+| DELETE | /users/:id   | Delete user        |
 
 ## Examples
 
 **Create**
 ```bash
-curl -X POST http://localhost:3000/user \
+curl -X POST http://localhost:3002/users \
   -H "Content-Type: application/json" \
   -d '{"email":"a@b.com","password":"secret"}'
 # 201 → {"id":1,"email":"a@b.com"}
@@ -51,19 +56,19 @@ curl -X POST http://localhost:3000/user \
 
 **List**
 ```bash
-curl http://localhost:3000/user
+curl http://localhost:3002/users
 # 200 → [{"id":1,"email":"a@b.com"}]
 ```
 
 **Get one**
 ```bash
-curl http://localhost:3000/user/1
+curl http://localhost:3002/users/1
 # 200 → {"id":1,"email":"a@b.com"}
 ```
 
 **Update** (email and/or password)
 ```bash
-curl -X PUT http://localhost:3000/user/1 \
+curl -X PUT http://localhost:3002/users/1 \
   -H "Content-Type: application/json" \
   -d '{"email":"new@b.com"}'
 # 200 → {"id":1,"email":"new@b.com"}
@@ -71,7 +76,7 @@ curl -X PUT http://localhost:3000/user/1 \
 
 **Delete**
 ```bash
-curl -X DELETE http://localhost:3000/user/1
+curl -X DELETE http://localhost:3002/users/1
 # 204 (no body)
 ```
 

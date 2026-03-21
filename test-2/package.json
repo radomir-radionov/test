@@ -1,7 +1,7 @@
 {
   "name": "lesson-architecture-example",
   "version": "1.0.0",
-  "description": "Example server: Controller → Service → Repository",
+  "description": "Express: middleware pipeline, JSON, Router, health-check, 404/error handlers; Controller → Service → Repository",
   "main": "src/app.js",
   "type": "module",
   "scripts": {
